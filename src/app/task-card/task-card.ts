@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgClass} from '@angular/common';
 
 @Component({
@@ -16,5 +16,11 @@ export class TaskCard {
   @Input() description: string = '';
   @Input() date: string = '';
   @Input() priority: string = '';
+
+  @Output() deleteTask = new EventEmitter<void>();
+
+  onDeleteClick() {
+    this.deleteTask.emit();
+  }
 
 }

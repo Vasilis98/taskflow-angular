@@ -18,7 +18,8 @@
           [title]="task.title"
           [description]="task.description"
           [date]="task.date"
-          [priority]="task.priority">
+          [priority]="task.priority"
+          (deleteTask)="removeTask(task)">
         </app-task-card>
       }
     </div>

@@ -6,7 +6,8 @@ import {TaskCard} from './task-card/task-card';
   selector: 'app-root',
   imports: [RouterOutlet, TaskCard],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
+  standalone: true
 })
 export class App {
 
@@ -36,4 +37,8 @@ export class App {
       priority: 'High'
     }
   ];
+
+  removeTask(task: any) {
+    this.tasks = this.tasks.filter(t => t !== task);
+  }
 }
