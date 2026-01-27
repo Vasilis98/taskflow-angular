@@ -1,0 +1,26 @@
+<article class="task-card">
+  <div class="task-card__header">
+    <span
+      class="task-card__tag"
+      [ngClass]="{
+        'task-card__tag--high': priority === 'High',
+        'task-card__tag--medium': priority === 'Medium',
+        'task-card__tag--low': priority === 'Low',
+      }">
+      {{ priority}}
+    </span>
+    <h4 class="task-card__title">{{ title }}</h4>
+  </div>
+
+  <p class="task-card__description">
+    {{ description }}
+  </p>
+
+  <div class="task-card__footer">
+    <span class="task-card__date">{{ date }}</span>
+    <div class="task-card__actions">
+      <button class="task-card__button">Edit</button>
+      <button class="delete-btn">🗑️</button>
+    </div>
+  </div>
+</article>
