@@ -1,12 +1,39 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import {TaskCard} from './task-card/task-card';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, TaskCard],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('taskflow-angular');
+
+  tasks = [
+    {
+      title: 'Fix Login Bug',
+      description: 'Users cannot log in with Google.',
+      date: 'Jan 24',
+      priority: 'High'
+    },
+    {
+      title: 'Design Logo',
+      description: 'Create 3 variations for the client.',
+      date: 'Feb 01',
+      priority: 'Medium'
+    },
+    {
+      title: 'Research Angular',
+      description: 'Learn about Components and Inputs.',
+      date: 'Today',
+      priority: 'Low'
+    },
+    {
+      title: 'Push to GitHub',
+      description: 'Upload the latest changes.',
+      date: 'Tomorrow',
+      priority: 'High'
+    }
+  ];
 }
