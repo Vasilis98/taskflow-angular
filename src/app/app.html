@@ -12,6 +12,26 @@
       <h1>Project Board</h1>
     </header>
 
+    <div class="add-task-container">
+      <input
+       type="text"
+       placeholder="Task Title..."
+       [(ngModel)]="newTaskTitle">
+
+      <input
+       type="text"
+       placeholder="Task Description..."
+       [(ngModel)]="newTaskDescription">
+
+      <select [(ngModel)]="newTaskPriority">
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+      </select>
+
+      <button (click)="addTask()">Add Task</button>
+    </div>
+
     <div class="board">
       @for (task of tasks; track task.title) {
         <app-task-card
