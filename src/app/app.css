@@ -18,3 +18,40 @@
   padding: 30px;
   overflow-y: auto;
 }
+
+.add-task-container {
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 12px; /* Κενό ανάμεσα στα κουτάκια */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.input-text, .input-select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.input-text {
+  flex: 1;
+}
+
+.btn-add {
+  background-color: #007bff; /* Μπλε */
+  color: white;
+  border: none;
+  padding: 0 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btn-add:hover {
+  background-color: #0056b3;
+}

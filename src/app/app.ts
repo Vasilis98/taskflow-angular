@@ -3,6 +3,13 @@ import { RouterOutlet } from '@angular/router';
 import {TaskCard} from './task-card/task-card';
 import {FormsModule} from '@angular/forms';
 
+interface Task {
+  title: string;
+  description: string;
+  priority: string;
+  date: string | Date;
+}
+
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, TaskCard, FormsModule],
@@ -12,7 +19,7 @@ import {FormsModule} from '@angular/forms';
 })
 export class App {
 
-  tasks = [
+  tasks: Task[] = [
     {
       title: 'Fix Login Bug',
       description: 'Users cannot log in with Google.',
@@ -58,7 +65,7 @@ export class App {
       title: this.newTaskTitle,
       description: this.newTaskDescription,
       priority: this.newTaskPriority,
-      date: 'Just now'
+      date: new Date()
     };
 
     // COMMIT

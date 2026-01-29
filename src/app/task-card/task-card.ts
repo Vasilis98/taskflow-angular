@@ -14,7 +14,7 @@ export class TaskCard {
 
   @Input() title: string = '';
   @Input() description: string = '';
-  @Input() date: string = '';
+  @Input() date: string | Date = '';
   @Input() priority: string = '';
 
   @Output() deleteTask = new EventEmitter<void>();
