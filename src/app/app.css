@@ -19,4 +19,38 @@
   overflow-y: auto;
 }
 
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 2px dashed #dee2e6;
+  color: #6c757d;
+  margin-top: 20px;
+}
 
+.empty-state p {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.filter-select {
+  border: 2px solid lightseagreen;
+  border-radius: 8px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.filter-select select {
+  cursor: pointer;
+  border: 2px solid lightseagreen;
+}
+
+.filter-bar {
+  display: flex;
+  align-items: center; /* Κάθετη στοίχιση στο κέντρο */
+  gap: 10px; /* Απόσταση μεταξύ label και select */
+  margin: 20px 0;
+  padding: 10px;
+}

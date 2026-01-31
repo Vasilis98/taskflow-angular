@@ -79,3 +79,7 @@
   font-weight: 500;
   margin-right: 8px;
 }
+
+.border-high { border-left-color: #c62828; }
+.border-medium { border-left-color: #ef6c00; }
+.border-low { border-left-color: #2e7d32; }

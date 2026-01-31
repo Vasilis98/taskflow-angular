@@ -20,6 +20,8 @@ interface Task {
 })
 export class App {
 
+  filterType: string = 'All';
+
   tasks: Task[] = [
     {
       title: 'Fix Login Bug',
@@ -54,6 +56,15 @@ export class App {
   removeTask(task: any) {
     this.tasks = this.tasks.filter(t => t !== task);
   }
+
+  get filteredTasks() {
+    if (this.filterType === 'All') {
+      return this.tasks;
+    }
+    return this.tasks.filter(task => task.priority === this.filterType);
+  }
+
+  setFilter(newFilter: string) {}
 
 }
 

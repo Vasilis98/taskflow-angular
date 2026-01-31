@@ -13,17 +13,36 @@
     </header>
 
     <app-task-form (createTask)="handleTaskCreation($event)"></app-task-form>
-
-    <div class="board">
-      @for (task of tasks; track task.title) {
-        <app-task-card
-          [title]="task.title"
-          [description]="task.description"
-          [date]="task.date"
-          [priority]="task.priority"
-          (deleteTask)="removeTask(task)">
-        </app-task-card>
-      }
+    <div class="filter-bar">
+      <label for="priorityFilter">
+        Filter by Priority:
+      </label>
+      <select id="priorityFilter" class="filter-select" [(ngModel)]="filterType">
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+        <option value="All">All</option>
+      </select>
     </div>
+
+    @if (filteredTasks.length > 0) {
+      <div class="board">
+        @for (task of filteredTasks; track task.title) {
+          <app-task-card
+            [title]="task.title"
+            [description]="task.description"
+            [date]="task.date"
+            [priority]="task.priority"
+            (deleteTask)="removeTask(task)">
+          </app-task-card>
+        }
+      </div>
+    } @else {
+      <div class="empty-state">
+        <p>🎉 No tasks available. Enjoy your free time!</p>
+        <small>Or create a new one above.</small>
+      </div>
+    }
+
   </main>
 </div>

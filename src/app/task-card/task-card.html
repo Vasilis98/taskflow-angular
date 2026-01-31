@@ -1,4 +1,8 @@
-<article class="task-card">
+<article class="task-card" [ngClass]="{
+  'border-high': priority === 'High',
+  'border-medium': priority === 'Medium',
+  'border-low': priority === 'Low'
+}">
   <div class="task-card__header">
     <span
       class="task-card__tag"
