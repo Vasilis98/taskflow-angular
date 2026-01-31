@@ -1,0 +1,19 @@
+<div class="add-task-container">
+  <input
+    type="text"
+    placeholder="Task Title..."
+    [(ngModel)]="newTaskTitle">
+
+  <input
+    type="text"
+    placeholder="Task Description..."
+    [(ngModel)]="newTaskDescription">
+
+  <select [(ngModel)]="newTaskPriority">
+    <option value="High">High</option>
+    <option value="Medium">Medium</option>
+    <option value="Low">Low</option>
+  </select>
+
+  <button (click)="submitTask()">Add Task</button>
+</div>

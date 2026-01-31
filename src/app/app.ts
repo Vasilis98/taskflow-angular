@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {TaskCard} from './task-card/task-card';
 import {FormsModule} from '@angular/forms';
+import { TaskForm} from './task-form/task-form';
 
 interface Task {
   title: string;
@@ -12,7 +13,7 @@ interface Task {
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, TaskCard, FormsModule],
+  imports: [RouterOutlet, TaskCard, FormsModule, TaskForm],
   templateUrl: './app.html',
   styleUrl: './app.css',
   standalone: true
@@ -46,34 +47,13 @@ export class App {
     }
   ];
 
+  handleTaskCreation(newTask: any) {
+    this.tasks.push(newTask);
+  }
+
   removeTask(task: any) {
     this.tasks = this.tasks.filter(t => t !== task);
   }
 
-  newTaskTitle = '';
-  newTaskDescription = '';
-  newTaskPriority = 'Low';
-
-  addTask() {
-    // VALIDATION
-    if (this.newTaskTitle.trim() === '') {
-      return;
-    }
-
-    // PACKAGING
-    const newTask = {
-      title: this.newTaskTitle,
-      description: this.newTaskDescription,
-      priority: this.newTaskPriority,
-      date: new Date()
-    };
-
-    // COMMIT
-    this.tasks.push(newTask);
-
-    // RESET
-    this.newTaskTitle = '';
-    this.newTaskDescription = '';
-    this.newTaskPriority = 'Low';
-  }
 }
+
