@@ -1,0 +1,84 @@
+<div class="app-container">
+  <aside class="sidebar">
+    <h2>TaskFlow</h2>
+    <nav>
+      <button>Dashboard</button>
+      <button>My Tasks</button>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header>
+      <h1>Project Board</h1>
+    </header>
+
+    <app-task-form (createTask)="handleTaskCreation($event)"></app-task-form>
+    <div class="filter-bar">
+      <label for="priorityFilter">
+        Filter by Priority:
+      </label>
+      <select id="priorityFilter" class="filter-select" [(ngModel)]="filterType">
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+        <option value="All">All</option>
+      </select>
+    </div>
+
+    @if (filteredTasks.length > 0) {
+      <div class="board">
+        @for (task of filteredTasks; track task.id) {
+          <a [routerLink]="['/task', task.id]" class="task-link">
+            <app-task-card
+              [title]="task.title"
+              [description]="task.description"
+              [date]="task.date"
+              [priority]="task.priority"
+              (deleteTask)="removeTask(task)"
+              (editTask)="openEditModal(task)">
+            </app-task-card>
+          </a>
+        }
+      </div>
+    } @else {
+      <div class="empty-state">
+        <p>🎉 No tasks available. Enjoy your free time!</p>
+        <small>Or create a new one above.</small>
+      </div>
+    }
+
+  </main>
+
+  @if (editingTask) {
+    <div class="modal-overlay" (click)="closeEditModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <h2>Edit Task</h2>
+
+        <div class="form-group">
+          <label>Title</label>
+          <input [(ngModel)]="editingTask.title" type="text">
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea [(ngModel)]="editingTask.description" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Priority</label>
+          <select [(ngModel)]="editingTask.priority">
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+        </div>
+
+        <div class="modal-actions">
+          <button (click)="closeEditModal()">Cancel</button>
+          <button (click)="saveTask()" style="background: #007bff; color: white;">Save Changes</button>
+        </div>
+
+      </div>
+    </div>
+  }
+</div>

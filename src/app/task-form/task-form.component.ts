@@ -5,10 +5,10 @@ import { FormsModule} from '@angular/forms';
   selector: 'app-task-form',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './task-form.html',
-  styleUrl: './task-form.css',
+  templateUrl: './task-form.component.html',
+  styleUrl: './task-form.component.css',
 })
-export class TaskForm {
+export class TaskFormComponent {
 
   @Output() createTask = new EventEmitter<any>();
 

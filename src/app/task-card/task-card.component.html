@@ -23,7 +23,7 @@
   <div class="task-card__footer">
     <span class="task-card__date">{{ date }}</span>
     <div class="task-card__actions">
-      <button class="task-card__button">Edit</button>
+      <button class="task-card__button" (click)="onEdit()">Edit</button>
       <button class="delete-btn" (click)="onDeleteClick()">🗑️</button>
     </div>
   </div>

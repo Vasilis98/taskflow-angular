@@ -7,20 +7,27 @@ import {NgClass} from '@angular/common';
   imports: [
     NgClass
   ],
-  templateUrl: './task-card.html',
-  styleUrl: './task-card.css',
+  templateUrl: './task-card.component.html',
+  styleUrl: './task-card.component.css',
 })
-export class TaskCard {
+export class TaskCardComponent {
 
   @Input() title: string = '';
   @Input() description: string = '';
   @Input() date: string | Date = '';
   @Input() priority: string = '';
 
+  @Input() task: any;
+  @Output() editTask = new EventEmitter<void>();
+
   @Output() deleteTask = new EventEmitter<void>();
 
   onDeleteClick() {
     this.deleteTask.emit();
+  }
+
+  onEdit() {
+    this.editTask.emit();
   }
 
 }

@@ -1,0 +1,41 @@
+
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  background-color: white;
+  border-right: 1px solid #ddd;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.nav-item {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+
+.nav-item:hover {
+  background-color: #f0f0f0;
+}
+
+.active-link {
+  background-color: lightseagreen;
+  color: white;
+  font-weight: bold;
+}
+
+
