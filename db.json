@@ -1,0 +1,25 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Fix Login Bug",
+      "description": "Users cannot log in with Google.",
+      "date": "Jan 24",
+      "priority": "High"
+    },
+    {
+      "id": 2,
+      "title": "Design Logo",
+      "description": "Create 3 variations for the client.",
+      "date": "Feb 01",
+      "priority": "Medium"
+    },
+    {
+      "id": 3,
+      "title": "Research Angular",
+      "description": "Learn about Components and Inputs.",
+      "date": "Today",
+      "priority": "Low"
+    }
+  ]
+}

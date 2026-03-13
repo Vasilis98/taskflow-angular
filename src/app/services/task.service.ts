@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
-
+import { Injectable, inject } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 export interface Task {
   id: number;
@@ -9,64 +10,59 @@ export interface Task {
   date: string | Date;
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
-
 export class TaskService {
 
-  tasks: Task[] = [
-    {
-      id: 1,
-      title: 'Fix Login Bug',
-      description: 'Users cannot log in with Google.',
-      date: 'Jan 24',
-      priority: 'High'
-    },
-    {
-      id: 2,
-      title: 'Design Logo',
-      description: 'Create 3 variations for the client.',
-      date: 'Feb 01',
-      priority: 'Medium'
-    },
-    {
-      id: 3,
-      title: 'Research Angular',
-      description: 'Learn about Components and Inputs.',
-      date: 'Today',
-      priority: 'Low'
-    }
-  ];
+  private http = inject(HttpClient);
+  private apiUrl = 'http://localhost:3000/tasks';
 
-  getAllTasks() {
-    return this.tasks;
+  private tasksSubject = new BehaviorSubject<Task[]>([]);
+  tasks$ = this.tasksSubject.asObservable();
+
+  constructor() {
+    this.loadTasks();
+  }
+
+  loadTasks() {
+    this.http.get<Task[]>(this.apiUrl).subscribe((tasks) => {
+      console.log('Τα δεδομένα ήρθαν επιτυχώς από τον server:', tasks);
+      this.tasksSubject.next(tasks);
+    });
   }
 
   getTaskById(id: number) {
-    return this.tasks.find(task => task.id === id);
+    return this.tasksSubject.value.find(task => task.id === id);
   }
 
   addTask(task: Task) {
-    const newId = this.tasks.length > 0
-    ? Math.max(...this.tasks.map(task => task.id)) + 1
+    const currentTasks = this.tasksSubject.value;
+
+    const newId = currentTasks.length > 0
+      ? Math.max(...currentTasks.map(t => t.id)) + 1
       : 1;
-    const taskWithId = {
-      ...task,
-      id: newId
-    };
-    this.tasks.push(taskWithId);
+    const taskWithId = { ...task, id: newId };
+
+    const updatedTasks = [...currentTasks, taskWithId];
+    this.tasksSubject.next(updatedTasks);
   }
 
   deleteTask(id: number) {
-    return this.tasks = this.tasks.filter(task => task.id !== id);
+    const currentTasks = this.tasksSubject.value;
+
+    const updatedTasks = currentTasks.filter(task => task.id !== id);
+    this.tasksSubject.next(updatedTasks);
   }
 
   updateTask(updatedTask: Task) {
-    const index = this.tasks.findIndex(task => task.id === updatedTask.id);
+    const currentTasks = this.tasksSubject.value;
+    const index = currentTasks.findIndex(task => task.id === updatedTask.id);
+
     if (index > -1) {
-      this.tasks[index] = updatedTask;
+      const updatedTasks = [...currentTasks];
+      updatedTasks[index] = updatedTask;
+      this.tasksSubject.next(updatedTasks);
     }
   }
 }

@@ -1,60 +1,11 @@
-// import {Component, OnDestroy, inject} from '@angular/core';
-// import { CommonModule } from '@angular/common';
-// import { FormsModule } from '@angular/forms';
-// import { TaskCardComponent} from '../../task-card/task-card.component';
-// import { TaskFormComponent} from '../../task-form/task-form.component';
-// import {RouterLink} from '@angular/router';
-// import {TaskService} from '../../services/task.service';
-//
-//
-//
-// @Component({
-//   selector: 'app-home',
-//   standalone: true,
-//   imports: [CommonModule, FormsModule, TaskCardComponent, TaskFormComponent, RouterLink],
-//   templateUrl: './home.component.html',
-//   styleUrl: './home.component.css'
-// })
-// export class HomeComponent {
-//   private taskService = inject(TaskService);
-//
-//
-//   constructor() {
-//     console.log('Home component created!!')
-//   }
-//
-//   filterType: string = 'All';
-//   editingTask: any = null;
-//
-//   handleTaskCreation(newTask: any) {
-//     this.taskService.addTask(newTask);
-//   }
-//
-//   removeTask(task: any) {
-//     this.taskService.deleteTask(task.id);
-//   }
-//
-//   openEditModal(task: any) {
-//     this.editingTask = { ...task };
-//   }
-//
-//   closeEditModal() {
-//     this.editingTask = null;
-//   }
-//
-//   saveTask() {
-//     this.taskService.updateTask(this.editingTask);
-//     this.closeEditModal();
-//   }
-// }
-
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { TaskCardComponent } from '../../task-card/task-card.component'; // Τσέκαρε αν η διαδρομή είναι σωστή
-import { TaskFormComponent } from '../../task-form/task-form.component'; // Τσέκαρε αν η διαδρομή είναι σωστή
+import { TaskCardComponent } from '../../task-card/task-card.component';
+import { TaskFormComponent } from '../../task-form/task-form.component';
 import { TaskService, Task } from '../../services/task.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -63,55 +14,55 @@ import { TaskService, Task } from '../../services/task.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
 
-  // 1. Φέρνουμε την "Αποθήκη" (Service)
   private taskService = inject(TaskService);
 
-  // 2. Μεταβλητές για την κατάσταση της Οθόνης (View State)
-  filterType: string = 'All'; // Τι επέλεξε ο χρήστης στο dropdown;
-  editingTask: any = null;    // Ποιο task επεξεργαζόμαστε τώρα; (αν υπάρχει)
+  filterType: string = 'All';
+  editingTask: any = null;
 
-  // 3. GETTER: Ο "Διανομέας"
-  // Αυτή η συνάρτηση τρέχει αυτόματα κάθε φορά που αλλάζει κάτι.
-  get filteredTasks() {
-    // Α. Πάρε όλα τα tasks από την αποθήκη
-    const tasks = this.taskService.getAllTasks();
+  tasks: Task[] = [];
+  private tasksSubscription!: Subscription;
 
-    // Β. Αν το φίλτρο είναι 'All', δώσ' τα όλα
-    if (this.filterType === 'All') {
-      return tasks;
+  ngOnInit() {
+    this.tasksSubscription = this.taskService.tasks$.subscribe(tasks => {
+      console.log('Home took the tasks', tasks);
+      this.tasks = tasks;
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.tasksSubscription) {
+      this.tasksSubscription.unsubscribe();
     }
-
-    // Γ. Αλλιώς, φιλτράρισε με βάση την προτεραιότητα
-    return tasks.filter(task => task.priority === this.filterType);
   }
 
-  // 4. Μέθοδοι Δράσης (Actions)
+  get filteredTasks() {
+    if (this.filterType === 'All') {
+      return this.tasks;
+    }
+    return this.tasks.filter(task => task.priority === this.filterType);
+  }
 
-  // Όταν δημιουργείται νέο task από τη φόρμα
+
   handleTaskCreation(newTask: any) {
-    this.taskService.addTask(newTask); // Στείλ' το στο Service να του δώσει ID και να το σώσει
+    this.taskService.addTask(newTask);
   }
 
-  // Όταν πατάμε διαγραφή στην κάρτα
   removeTask(task: any) {
-    this.taskService.deleteTask(task.id); // Πες στο Service να το σβήσει
+    this.taskService.deleteTask(task.id);
   }
 
-  // Άνοιγμα Edit Modal
   openEditModal(task: any) {
-    this.editingTask = { ...task }; // Αντιγραφή για να μην χαλάσουμε το original πριν πατήσουμε Save
+    this.editingTask = { ...task };
   }
 
-  // Κλείσιμο Edit Modal
   closeEditModal() {
     this.editingTask = null;
   }
 
-  // Αποθήκευση αλλαγών (Update)
   saveTask() {
-    this.taskService.updateTask(this.editingTask); // Στείλε τις αλλαγές στο Service
+    this.taskService.updateTask(this.editingTask);
     this.closeEditModal();
   }
 }

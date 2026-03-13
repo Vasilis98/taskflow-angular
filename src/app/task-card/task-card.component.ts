@@ -22,7 +22,8 @@ export class TaskCardComponent {
 
   @Output() deleteTask = new EventEmitter<void>();
 
-  onDeleteClick() {
+  onDeleteClick(event: Event) {
+    event.stopPropagation()
     this.deleteTask.emit();
   }
 
